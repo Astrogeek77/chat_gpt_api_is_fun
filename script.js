@@ -1,9 +1,10 @@
-import { config } from "dotenv"
-config()
+// imports
+import { config } from 'dotenv'
+import { Configuration, OpenAIApi } from 'openai'
+import readline from 'readline'
 
-import { Configuration, OpenAIApi } from "openai"
-import readline from "readline"
-
+config() // dotenv config
+// open AI config
 const openAi = new OpenAIApi(
   new Configuration({
     apiKey: process.env.OPEN_AI_API_KEY,
@@ -16,11 +17,16 @@ const userInterface = readline.createInterface({
 })
 
 userInterface.prompt()
-userInterface.on("line", async input => {
+userInterface.on('line', async (input) => {
   const response = await openAi.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    messages: [{ role: "user", content: input }],
+    model: 'gpt-3.5-turbo',
+    messages: [{ role: 'user', content: input }],
   })
   console.log(response.data.choices[0].message.content)
   userInterface.prompt()
 })
+
+// userInterface.prompt()
+// userInterface.on('line', async (input) => {
+//   const response = await openAi.createTranslation
+// })
